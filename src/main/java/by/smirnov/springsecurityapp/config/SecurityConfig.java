@@ -5,6 +5,7 @@ import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -20,6 +21,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.personDetailsService = personDetailsService;
     }
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable() //отключаем защиту от межсайтовой подделки запросов
+                .authorizeRequests() //настраиваем авторизацию
+                .antMatchers("/auth/login", "/error").permitAll() //всех пользователей пускаем на эти страницы
+                .anyRequest().authenticated() //на всех остальных пользователь д.б. аутентифицирован
+                .and()//переходим к настройке своей страницы аутентификации
+                .formLogin().loginPage("/auth/login") //определяем свою страницу
+                .loginProcessingUrl("/process_login")
+                .defaultSuccessUrl("/hello", true) //прошедший перенаправляется сюда
+                .failureUrl("/auth/login?error"); //не прошедший сюда
+    }
+
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(personDetailsService);
     }
