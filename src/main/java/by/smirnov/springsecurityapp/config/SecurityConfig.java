@@ -1,7 +1,6 @@
 package by.smirnov.springsecurityapp.config;
 
 import by.smirnov.springsecurityapp.services.PersonDetailsService;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable() //отключаем защиту от межсайтовой подделки запросов
                 .authorizeRequests() //настраиваем авторизацию
-                .antMatchers("/auth/login", "/error").permitAll() //всех пользователей пускаем на эти страницы
+                .antMatchers("/auth/login", "/auth/registration", "/error").permitAll() //всех пользователей пускаем на эти страницы
                 .anyRequest().authenticated() //на всех остальных пользователь д.б. аутентифицирован
                 .and()//переходим к настройке своей страницы аутентификации
                 .formLogin().loginPage("/auth/login") //определяем свою страницу
