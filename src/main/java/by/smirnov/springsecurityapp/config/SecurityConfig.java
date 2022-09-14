@@ -24,7 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests() //настраиваем авторизацию
+        http
+                .csrf().disable()//отключаем при обращении не через браузер, н-р, чере Postman
+                .authorizeRequests() //настраиваем авторизацию
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/auth/login", "/auth/registration", "/error").permitAll() //всех пользователей пускаем на эти страницы
                 /*.anyRequest().authenticated() //на всех остальных пользователь д.б. аутентифицирован*/
