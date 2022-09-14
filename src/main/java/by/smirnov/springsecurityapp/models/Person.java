@@ -10,7 +10,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Getter
 @Setter
@@ -29,7 +28,7 @@ public class Person {
     @Column(name = "username")
     private String username;
 
-    @Min(value = 1990, message = "Год рождения должен быть больше 1900")
+    @Min(value = 1900, message = "Год рождения должен быть больше 1900")
     @Column(name = "year_of_birth")
     private int yearOfBirth;
 

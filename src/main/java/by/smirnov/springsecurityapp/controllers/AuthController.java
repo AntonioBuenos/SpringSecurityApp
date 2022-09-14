@@ -17,13 +17,13 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final PersonValidator personValidator;
     private final RegistrationService registrationService;
+    private final PersonValidator personValidator;
 
     @Autowired
-    public AuthController(PersonValidator personValidator, RegistrationService registrationService) {
-        this.personValidator = personValidator;
+    public AuthController(RegistrationService registrationService, PersonValidator personValidator) {
         this.registrationService = registrationService;
+        this.personValidator = personValidator;
     }
 
     @GetMapping("/login")

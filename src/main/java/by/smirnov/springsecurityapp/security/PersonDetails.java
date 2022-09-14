@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+
 public class PersonDetails implements UserDetails {
 
     private final Person person;
