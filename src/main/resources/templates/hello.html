@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Hello</title>
 </head>
 <body>
 
 Up the Irons!
 
-<a href="/logout">Разлогиниться к едрени хрени!</a>
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Разлогиниться к едрени фени!" />
+</form>
 
 </body>
 </html>

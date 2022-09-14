@@ -22,10 +22,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable() //отключаем защиту от межсайтовой подделки запросов
-                .authorizeRequests() //настраиваем авторизацию
+        http.authorizeRequests() //настраиваем авторизацию
+                .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/auth/login", "/auth/registration", "/error").permitAll() //всех пользователей пускаем на эти страницы
-                .anyRequest().authenticated() //на всех остальных пользователь д.б. аутентифицирован
+                /*.anyRequest().authenticated() //на всех остальных пользователь д.б. аутентифицирован*/
+                .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()//переходим к настройке своей страницы аутентификации
                 .formLogin().loginPage("/auth/login") //определяем свою страницу
                 .loginProcessingUrl("/process_login")
